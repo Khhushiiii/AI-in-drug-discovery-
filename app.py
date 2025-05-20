@@ -37,7 +37,7 @@ with st.sidebar:
     st.markdown("---")
     app_mode = st.radio("📍 Navigate", ["🏠 Home", "📖 About", "💊 Predict Drug"])
     st.markdown("---")
-    st.info("Developed by group (KHUSHI , ANKIT , ANSHUMAN , SHIVAM , YASH)❤️", icon="💻")
+    #st.info("Developed by group (KHUSHI , ANKIT , ANSHUMAN , SHIVAM , YASH)❤️", icon="💻")
 
 # Main content
 if app_mode == "🏠 Home":
