@@ -37,7 +37,7 @@ with st.sidebar:
     st.markdown("---")
     app_mode = st.radio("📍 Navigate", ["🏠 Home", "📖 About", "💊 Predict Drug"])
     st.markdown("---")
-    #st.info("Developed by group (KHUSHI , ANKIT , ANSHUMAN , SHIVAM , YASH)❤️", icon="💻")
+    st.info("Developed by Team❤️", icon="💻")
 
 # Main content
 if app_mode == "🏠 Home":
@@ -88,14 +88,28 @@ elif app_mode == "💊 Predict Drug":
         selected_disease = st.selectbox("🧬 Choose a Disease:", disease_options)
 
         if st.button("🔍 Predict Drugs"):
+            # Get probabilities for the predicted disease
             probs = model.predict_proba([selected_disease])[0]
             top_indices = np.argsort(probs)[::-1][:5]
 
             st.success(f"🧪 Top 5 Drug Predictions for **{selected_disease}**:")
+            drug_predictions = []
             for idx in top_indices:
                 drug = label_encoder.inverse_transform([idx])[0]
                 prob = round(probs[idx] * 100, 2)
+                drug_predictions.append((drug, prob))
                 st.markdown(f"➡️ **{drug}** — `{prob}%` 💊")
 
-       
-
+            # Doctor Verification
+            st.markdown("### 🩺 Doctor's Verification")
+            verification = st.radio("Does the doctor approve the drug predictions?", ["✅ Approved", "❌ Rejected", "✏️ Modify"])
+            
+            if verification == "✅ Approved":
+                st.success("The drug suggestions have been approved by the doctor. 🩺✅")
+            elif verification == "❌ Rejected":
+                st.error("The drug suggestions have been rejected by the doctor. 🩺❌")
+            elif verification == "✏️ Modify":
+                modification = st.text_area("Please provide any modifications or comments:")
+                if st.button("Submit Modification"):
+                    st.info(f"Doctor's modification: {modification} 📝")
+                    st.success("Modification has been submitted for review. 🩺✅")
